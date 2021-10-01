@@ -248,3 +248,100 @@ const argv = require('yargs')
 ```
 
 # Aplicación de consola interactiva
+
+- Inicio de un proyecto:
+
+```bash
+# npm init
+# instalar paquetes
+# git init
+# crear .gitignore
+```
+
+## Recibir información
+
+```js
+// Preparar la interfaz para el usuario
+const readline = require('readline').createInterface({
+    input: process.stdin,   // permite recibir información del usuario
+    output: process.stdout, // permite mostrar información al usuario
+});
+
+// .question para usar stdout
+// answer lo que se ingresa por consola
+readline.question('Select an option: ', (answer) => {
+    console.log({ answer });
+    readline.close();   // Cerrar el ingreso de información
+});
+```
+
+## Inquirer
+
+- <https://www.npmjs.com/package/inquirer>
+
+```js
+const inquirer = require('inquirer');
+
+const questions = [
+	{
+		type: 'list',                               // Tipo de presentación
+        type: 'input',
+        type: 'confirm',
+        type: 'checkbox',
+		name: 'option',                             // Nombre de la propiedad que almacena el valor devuelto
+		message: 'What you want to do?',            // Mensaje antes del menú
+		choices: ['opt1', 'opt2', 'opt3'],          // Opciones del menú
+		choices: [
+            {
+                value:  '1',
+                name:   'Message to show',
+                checked: true,                      // Para type: checkbox
+            },
+        ],                                          // Opciones del menú con valor
+        validate (value)                            // Para usarlo con input
+        {
+            if (value.length === 0)
+            {
+                return 'Please, insert a value.';
+            }
+            else
+            {
+                return true;
+            }
+        }
+	}
+];
+
+const option = await inquirer.prompt(questions);    // Devuelve lo que el usuario elija
+```
+
+- <https://www.npmjs.com/package/uuid>
+
+```js
+const { v4: uuidv4 } = require('uuid');
+
+const id = uuidv4();
+```
+
+```js
+fs.existsSync('path/to/file');
+fs.readFileSync('path/to/file', { encoding: 'utf-8' }); // Encoding, sino devuelve en bytes
+```
+
+# Apuntes extras JS
+
+```js
+// Obtener los keys de un objeto
+Object.keys(this.objectName).forEach(key => {
+    // code...
+});
+
+// Borrar elemento de un objeto
+delete this._taskList[id];
+
+// Añadir elemento al inicio del arreglo
+choices.unshift( /* elem */ );
+
+// Guardar fecha como string
+task.completedDate = new Date().toISOString();
+```
