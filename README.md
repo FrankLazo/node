@@ -328,6 +328,76 @@ fs.existsSync('path/to/file');
 fs.readFileSync('path/to/file', { encoding: 'utf-8' }); // Encoding, sino devuelve en bytes
 ```
 
+# Aplicación de clima
+
+```json
+// en package.json
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+},
+```
+
+```bash
+# Para instalar varios paquetes a la vez
+npm i color inquirer
+```
+
+En Node no se puede usar fetch():
+
+- <https://www.npmjs.com/package/request> Obsoleto, pero aún es muy usado, trabaja en base a callbacks
+- <https://www.npmjs.com/package/fetch> Aún le faltan funcionalidades del fetch() de JS
+- <https://www.npmjs.com/package/axios> Similiar a request pero con promesas
+- <https://reqres.in/> Endpoint de pruebas
+
+## Axios
+
+```bash
+npm i axios
+```
+
+```js
+const axios = require('axios');
+
+const resp = await axios.get('https://reqres.in/api/users?page=2');
+console.log(resp.data);
+```
+
+- <https://www.mapbox.com/> Crearse una cuenta y generar un token
+- <https://docs.mapbox.com/api/search/geocoding/> Playground
+
+```js
+// otra manera de hacer la petición
+const instance = axios.create({
+    baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${ place }.json`,
+    params: {
+        'limit': 6,
+        'language': 'es',
+        'access_token': token,
+    },
+});
+
+const resp = await instance.get();
+```
+
+## Variables de entorno
+
+- <https://www.npmjs.com/package/dotenv>
+
+```js
+// en index.js
+require('dotenv').config();
+
+// buscará las variables en .env
+// KEY=VALUE
+console.log(process.env.KEY);
+```
+
+- `.env` normalmente no se sube al repositorio por contener información sensible.
+- En su lugar se sube `.env.example` donde se explica la información requerida.
+
+- <https://openweathermap.org/>
+
 # Apuntes extras JS
 
 ```js

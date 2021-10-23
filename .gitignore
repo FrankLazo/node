@@ -1,2 +1,3 @@
 node_modules
 01-fernando-herrera/03-node-basics/output/*.txt
+.env
