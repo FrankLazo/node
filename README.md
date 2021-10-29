@@ -398,6 +398,143 @@ console.log(process.env.KEY);
 
 - <https://openweathermap.org/>
 
+# WebServer
+
+```js
+// Crear un servidor
+const http = require('http');
+
+// request: lo que se le envía al servidor
+// response: lo que devuelve el servidor
+http.createServer((request, response) => {
+        response.write('Hello world!'); // escribir el texto / debe ser un string
+		response.end();                 // finalizar la escritura
+    })
+    .listen( 8080 );                    // puerto por el que se llamará
+                                        // localhost:8080
+
+// request: tiene información como headers, url, method, host, connection
+// connection: 'keep-alive' mantiene la conexión abierta hasta obtener una respuesta
+
+response.writeHead(200, { 'Content-Type': 'text/plain' });  // Establecer el estado de la respuesta
+response.writeHead(200, { 'Content-Type': 'application/json' });
+
+// Para un archivo descargable
+response.setHeader('Content-Disposition', 'attachment; filename=list.csv');
+response.writeHead(200, { 'Content-Type': 'application/csv' });
+response.write('id, nombre\n');
+response.write('1, Fernando\n');
+response.write('2, María\n');
+response.write('3, Juan\n');
+response.write('4, Pedro\n');
+```
+
+## Express
+
+- <https://www.npmjs.com/package/express>
+- <http://expressjs.com/>
+
+```js
+const express = require('express');
+const app = express();
+const port = 8080;
+
+// Express hace un manejo automático de las rutas
+app.get('/', (req, res) => {
+	res.send('Hello world!');
+});
+
+// Para cualquier otra ruta
+app.get('*', (req, res) => {
+	res.send('404 | Page not found');
+});
+
+app.listen(port, () => {
+	console.log(`Example app listening at http://localhost:${port}`)
+});
+```
+
+Servir contenido estático
+
+```js
+// Ya no se ejecutará el app.get()
+// La carpeta pública tiene prioridad sobre las demás rutas
+// Express siempre buscará el index.html
+app.use( express.static('./01-fernando-herrera/06-webserver/public') );
+
+// Redireccionar
+app.get('*', (req, res) => {
+	res.sendFile(`${ __dirname }/public/not_found.html`);
+});
+```
+
+Servir contenido dinámico
+
+- Para webs sencillas: Mustache: Handlebars
+- Para webs más grandes: React, Angular, etc.
+- <https://www.npmjs.com/package/handlebars> Para JS solo.
+- <https://github.com/pillarjs/hbs> Para Express.
+
+```js
+// Para decirle a Express que se va a usar hbs como template engine
+app.set('view engine', 'hbs');
+
+// Con handlebars usar MVC: views/
+// Vistas con extensión .hbs
+// Para renderizar home.hbs
+app.get('/', (req, res) => {
+	res.render(`home`);
+});
+
+// Para mandar información desde el controlador
+app.get('/', (req, res) => {
+	res.render('home', {
+		name: 'Frank Lazo',
+		title: 'Curso de Node',
+	});
+});
+
+// Establecer ruta de views/
+app.set('views', basePath + '/views');
+```
+
+```hbs
+{{ name }}
+```
+
+Crear parciales
+
+```js
+const hbs = require('hbs');
+
+hbs.registerPartials( __dirname + 'views/partials' );
+```
+
+```hbs
+{{> footer }}
+```
+
+Desplegar aplicación
+
+- Variable de entorno PORT (En el hosting se proveerá automáticamente de un puerto, sino, buscará en nuestras variables de entorno)
+- En `package.js` crear el script `"start": "node app.js"`
+- Serverless:
+    - <https://firebase.google.com/docs/hosting?hl=es>
+    - <https://azure.microsoft.com/en-ca/free/search/>
+    - <https://aws.amazon.com/es/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all>
+    - <https://cloud.google.com/>
+    - <https://try.digitalocean.com/developerbrand/>
+    - <https://www.heroku.com/>
+
+Heroku:
+- Instalar heroku CLI
+- Seguir los pasos de **Deploy using Heroku Git**
+
+```bash
+heroku git:remote -a sample-node-lazodev
+
+```
+
 # Apuntes extras JS
 
 ```js
