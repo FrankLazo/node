@@ -533,6 +533,19 @@ Heroku:
 ```bash
 heroku git:remote -a sample-node-lazodev
 
+# ver si ya se ha usado master o main
+# git branch
+git push heroku master
+```
+
+- <https://www.npmjs.com/package/http-server> Para montar un servidor y probar builds de Angular o React
+- Copiar el build de las app en public
+
+```bash
+npm install --global http-server
+
+# en la carpeta de la app
+http-server -o
 ```
 
 # Apuntes extras JS

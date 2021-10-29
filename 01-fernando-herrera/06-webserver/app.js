@@ -12,7 +12,9 @@ app.set('views', basePath + '/views');
 hbs.registerPartials( __dirname + '/views/partials' );
 
 // Servir contenido estático
-app.use( express.static(`${ basePath }/public`) );
+// app.use( express.static(`${ basePath }/public`) );
+// app.use( express.static(`${ basePath }/public-react`) );
+app.use( express.static(`${ basePath }/public-angular`) );
 
 // Con public-template
 
@@ -32,25 +34,32 @@ app.use( express.static(`${ basePath }/public`) );
 
 // Con hbs
 
-app.get('/', (req, res) => {
-	res.render('home', {
-		name: 'Frank Lazo',
-		title: 'Curso de Node',
-	});
-});
+// app.get('/', (req, res) => {
+// 	res.render('home', {
+// 		name: 'Frank Lazo',
+// 		title: 'Curso de Node',
+// 	});
+// });
 
-app.get('/generic', (req, res) => {
-	res.render('generic', {
-		name: 'Frank Lazo',
-		title: 'Curso de Node',
-	});
-});
+// app.get('/generic', (req, res) => {
+// 	res.render('generic', {
+// 		name: 'Frank Lazo',
+// 		title: 'Curso de Node',
+// 	});
+// });
 
-app.get('/elements', (req, res) => {
-	res.render('elements', {
-		name: 'Frank Lazo',
-		title: 'Curso de Node',
-	});
+// app.get('/elements', (req, res) => {
+// 	res.render('elements', {
+// 		name: 'Frank Lazo',
+// 		title: 'Curso de Node',
+// 	});
+// });
+
+// Con React o Angular
+
+app.get('*', (req, res) => {
+	// res.sendFile(`${ __dirname }/public-react/index.html`);
+	res.sendFile(`${ __dirname }/public-angular/index.html`);
 });
 
 app.listen(port, () => {
