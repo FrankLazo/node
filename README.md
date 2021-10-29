@@ -540,12 +540,122 @@ git push heroku master
 
 - <https://www.npmjs.com/package/http-server> Para montar un servidor y probar builds de Angular o React
 - Copiar el build de las app en public
+- Handlebars ya no sería necesario
 
 ```bash
 npm install --global http-server
 
 # en la carpeta de la app
 http-server -o
+```
+
+# Restserver
+
+- Se puede trabaja con o sin clases la configuración del webserver
+
+middlewares: funcionalidades que añaden otras funcionalidades
+generalmente las que usan `.use`
+
+## Peticiones HTTP
+
+```js
+// de manera análoga con las demás peticiones HTTP
+
+this.app.get('/api', (req, res) => {
+    res.json({
+        message: 'get API',
+    });
+});
+
+this.app.put('/api', (req, res) => {
+    res.json({
+        message: 'put API',
+    });
+});
+
+this.app.post('/api', (req, res) => {
+    res.json({
+        message: 'post API',
+    });
+});
+
+this.app.delete('/api', (req, res) => {
+    res.json({
+        message: 'delete API',
+    });
+});
+```
+
+```js
+// En backend hay que manejar los status
+// 400's (errores en cliente) y
+// 500's (errores en servidor)
+this.app.get('/api', (req, res) => {
+    res.status(404).json({
+        message: 'get API',
+    });
+});
+```
+
+- <https://www.npmjs.com/package/cors>
+
+CORS para proteger desde que sitios se desea acceder a la api
+
+```js
+const cors = require('cors');
+
+app.use( cors() );
+```
+
+Separar las rutas y el controlador de la clase:
+
+```js
+// En Server()
+routes()
+{
+    this.app.use('/api/users', require('../routes/user'));
+}
+
+// En user:
+const { Router } = require('express');
+const router = Router();
+
+router.get('/', (req, res) => {
+	res.json({
+		message: 'get API',
+	});
+});
+
+module.exports = router;
+```
+
+Obtener información de PUT o POST
+
+```js
+// middleware
+this.app.use( express.json() );
+
+// en el controlador
+const body = req.body;
+```
+
+Parámetros de segmento
+
+```js
+// en rutas
+router.put('/:id', usersPut);
+
+// en controlador
+const { id } = req.params;
+```
+
+Querystrings
+
+```js
+// en controlador
+const query = req.query;
+// manejar valores por defecto
+const { page = 1, limit = 10 } = req.query;
 ```
 
 # Apuntes extras JS

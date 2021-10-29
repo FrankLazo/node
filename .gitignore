@@ -1,9 +1,10 @@
 node_modules
 01-fernando-herrera/03-node-basics/output/*.txt
-# .env
+.env
 
-01-fernando-herrera/01-hello-world
-01-fernando-herrera/02-basics
-01-fernando-herrera/03-node-basics
-01-fernando-herrera/04-task-manager
-01-fernando-herrera/05-weather-app
+# 01-fernando-herrera/01-hello-world
+# 01-fernando-herrera/02-basics
+# 01-fernando-herrera/03-node-basics
+# 01-fernando-herrera/04-task-manager
+# 01-fernando-herrera/05-weather-app
+# 01-fernando-herrera/06-webserver
